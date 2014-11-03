@@ -11,4 +11,26 @@ python , php , java,
 平台是:
 linux，mac，Android，iPhone，
 
+##使用开发语言为:
+#python
+
+##使用技术为：
+linux  服务器
+
+ngnix 静态文件服务器
+
+tornado 框架作为服务器框架
+
+bootstrap 作为前端的展示
+
+postgresql 网站的数据库
+
+sqlalchemy 网站的数据库的orm构架
+
+nuittest 网站的测试用例框架
+
+暂时使用这些技术，如果后期出现负载问题，可能会使用redis
+
+
+
 
