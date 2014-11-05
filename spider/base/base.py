@@ -8,6 +8,8 @@
 
 import urllib2
 import requests
+import urllib
+from bs4 import BeautifuSoup
 
 """"基础类的建设，主要是一些抓取模块的基础类"""
 
@@ -19,13 +21,32 @@ class Base(object):
             raise
         else:
             self.site = site
+
+    #解析请求数据，最后返回字符串
     def request_site(self):
         site_html = requests.get(
                 url = self.site
                 )
-        print site_html.encoding 
-        html =  site_html.text
-        return html 
+        if site_html.status_code != 200:
+            print site_html.status_code
+            raise
+        else:
 
+            html =  site_html.text
+            return html 
+    
+    #对象生成
+    def get_soup(self,site_file=None):
+        if site_file is None:
+            raise
+        else:
+            soup = BeautifuSoup(site_file)
+            return soup
+    
+    #图片下载
+    def down_img(self,img_url):
+        name = img_url[40:]
+        urllib.urlretrieve(img_url,name)
+        
 
 
