@@ -9,7 +9,8 @@
 import urllib2
 import requests
 import urllib
-from bs4 import BeautifuSoup
+import re
+from bs4 import BeautifulSoup
 
 """"基础类的建设，主要是一些抓取模块的基础类"""
 
@@ -35,13 +36,19 @@ class Base(object):
             html =  site_html.text
             return html 
     
-    #对象生成
-    def get_soup(self,site_file=None):
-        if site_file is None:
+    #返回符合查找的信息列表
+    def get_content(self,site_file=None,name=None,tag=None):
+        if (site_file or tag) is None:
             raise
         else:
-            soup = BeautifuSoup(site_file)
-            return soup
+            soup = BeautifulSoup(site_file)
+            if tag == 1:
+                content = soup.find_all(class_ = re.compile(name))
+            elif tag ==0:
+                content = soup.find_all(name)
+
+           # print content
+            return content
     
     #图片下载
     def down_img(self,img_url):
