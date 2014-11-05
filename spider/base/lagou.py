@@ -7,5 +7,18 @@
 #Description: 
 
 """暂时定为为抓取拉钩的工作信息，方向为python"""
+from  base import Base
+
+class Lagou(Base):
+    site = "http://www.lagou.com/jobs/list_python?kd=python&spc=&pl=&gj=&xl=&yx=&gx=&st=&labelWords=&lc=&workAddress=&city="
+    html = Base(site).request_site()
+    def get_html(self):
+        print self.html
 
 
+if __name__ == "__mian__":
+    lagou_site = Lagou()
+    print lagou_site.html
+    lagou_site.get_html()
+    #print lagou_site.html
+    #print site
