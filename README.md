@@ -25,7 +25,7 @@ linux  服务器
 
 ngnix 静态文件服务器
 
-tornado 框架作为服务器框架
+flask 框架作为开发框架
 
 bootstrap 作为前端的展示
 
