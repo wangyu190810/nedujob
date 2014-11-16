@@ -6,8 +6,8 @@
 #Date: 2014-11-12
 #Description: 
 
-from sqlalchemy.shema import Column,Table
-from sqlalchemy.type import UnicodeText,Integer,Unicode,String,DateTime,Date
+from sqlalchemy.schema import Column,Table
+from sqlalchemy.types import UnicodeText,Integer,Unicode,String,DateTime,Date
 from sqlalchemy.sql import insert,select,update
 
 from datetime import datetime
@@ -15,7 +15,7 @@ from datetime import datetime
 from base import metadata,conn,Base
 
 lagou = Table("lagou",metadata,
-        Column("id",Integer,primary_key=Ture,index=Ture),
+        Column("id",Integer,primary_key=True,index=True),
         Column("company",Unicode(255),doc=u"公司"),
         Column("company_link",Unicode(255),doc=u"公司链接"),
         Column("lagou_link",Unicode(255),doc=u"拉钩链接"),
@@ -27,5 +27,10 @@ lagou = Table("lagou",metadata,
         Column("scale",Unicode(255),doc=u"公司规模"),
         Column("stage",Unicode(255),doc=u"公司阶段"),
 
-
         )
+
+class Lagou(Base):
+
+    @classmethod
+    def add_company(self,company,company_link,lagou_link,CEO,salary,timing,field,scale,stage):
+        lagou.insert().values()
