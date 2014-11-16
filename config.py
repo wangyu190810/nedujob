@@ -13,4 +13,6 @@ class Config(object):
             "password":"wangyu190810"
             }
 
+    def lziy(self):
+        pass
 
