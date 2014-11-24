@@ -24,11 +24,3 @@ class Lagou(Base):
             print company_url
 
 
-
-
-        
-
-
-if __name__ == "__main__":
-    lagou_site = Lagou()
-    lagou_site.get_message()
