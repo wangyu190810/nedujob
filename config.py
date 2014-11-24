@@ -7,11 +7,7 @@
 #Description: 
 
 class Config(object):
-    db = {"host":"localhost",
-            "db":"ndeujob",
-            "user":"postgres",
-            "password":"wangyu190810"
-            }
+    db = "msyql://root:1234@localhost/nedujob?charset=utf8"
 
     def lziy(self):
         pass
