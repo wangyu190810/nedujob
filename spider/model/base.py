@@ -6,19 +6,26 @@
 #Date: 2014-11-05
 #Description: 
 
-from sqlalchemy.shema import metaData
+from sqlalchemy.schema import MetaData
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import as_declarative
-metadata = metaData()
+
+
+metadata = MetaData()
+from config import Config
+
+
 
 @as_declarative(metadata=metadata)
 class Base(object):
     pass
 
 
-engine = create_engine("mysql://root:1234@localhost/nedujob?charset=utf8",echo=True)
-conn = engine.connect()
+engine = create_engine(Config.db,echo=True)
 
+def conn():
+    connection = engine.connect()
+    return connection
 
 """数据库的一些抽象"""
 

@@ -33,4 +33,6 @@ class Lagou(Base):
 
     @classmethod
     def add_company(self,company,company_link,lagou_link,CEO,salary,timing,field,scale,stage):
-        lagou.insert().values()
+        stmt = lagou.insert().values(company,company_link,lagou_link,CEO,salary,timing,field,scale,stage)
+        conn().execute(stmt)
+
