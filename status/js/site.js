@@ -1,1 +1,0 @@
-function status(blog):
