@@ -1,0 +1,12 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+*.py[ocd]
+
+doc/*
+
+.idea
+
+config.py
+
+sql/*
+
