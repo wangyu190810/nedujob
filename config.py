@@ -7,8 +7,10 @@
 #Description: 
 
 class Config(object):
-    db = "msyql://root:1234@localhost/nedujob?charset=utf8"
-
+    db = "postgresql://postgres:2015@localhost/nedujob"
+    SUCCESS_KEY = u"adsfsdf"
+    salt = u"asdfa"
+    pic = ""
     def lziy(self):
         pass
 
