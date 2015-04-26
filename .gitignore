@@ -1,4 +1,22 @@
+<<<<<<< HEAD
 *.xml
 application.pyc
 *.pyc
 .idea/.name
+=======
+# Created by .ignore support plugin (hsz.mobi)
+
+*.py[ocd]
+
+doc/*
+
+.idea
+
+config.py
+
+sql/*
+
+*.xml
+>>>>>>> develop
+*.xml
+*.xml
