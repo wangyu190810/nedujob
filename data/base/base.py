@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 """"基础类的建设，主要是一些抓取模块的基础类"""
 
 
-#拿到网站的链接，返回html文件，等待对应的模块解析各自的文件
+# 拿到网站的链接，返回html文件，等待对应的模块解析各自的文件
 class Base(object):
     def __init__(self,site=None):
         if site is None:
@@ -23,20 +23,19 @@ class Base(object):
         else:
             self.site = site
 
-    #解析请求数据，最后返回字符串
+    # 解析请求数据，最后返回字符串
     def request_site(self):
         site_html = requests.get(
-                url = self.site
+                    url=self.site
                 )
         if site_html.status_code != 200:
             print site_html.status_code
             raise
         else:
-
-            html =  site_html.text
+            html = site_html.text
             return html 
     
-    #返回符合查找的信息列表
+    # 返回符合查找的信息列表
     def get_content(self,site_file=None,name=None,tag=None):
         if (site_file or tag) is None:
             raise
@@ -46,11 +45,9 @@ class Base(object):
                 content = soup.find_all(class_ = re.compile(name))
             elif tag ==0:
                 content = soup.find_all(name)
-
-           # print content
             return content
     
-    #图片下载
+    # 图片下载
     def down_img(self,img_url):
         name = img_url[40:]
         urllib.urlretrieve(img_url,name)

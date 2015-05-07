@@ -11,7 +11,9 @@ from sqlalchemy import create_engine
 from config import Config
 
 from views.user import user_login,user_register
-from views.index import index
+from views.index import index_job_info,index_job_info_site
+from views.job import job_info
+
 
 app = Flask(__name__)
 app.secret_key = Config.SUCCESS_KEY
@@ -21,10 +23,17 @@ app.config["SQLALCHEMY_DATABASE_URI"] = Config.db
 app.sa_engine = create_engine(Config.db)
 app.DBSession = scoped_session(sessionmaker(bind=app.sa_engine))
 
+
+# ---index---
+
 app.add_url_rule("/index" ,methods=["GET"],
-                 view_func=index)
+                 view_func=index_job_info)
 app.add_url_rule("/", methods=["GET"],
-                 view_func=index)
+                 view_func=index_job_info)
+app.add_url_rule("/info/<site>",methods=["GET"],
+                 view_func=index_job_info_site)
+
+# ----user----
 
 app.add_url_rule("/register", methods=["GET", "POST"],
                  view_func=user_register)
@@ -32,7 +41,10 @@ app.add_url_rule("/login", methods=["GET", "POST"],
                  view_func=user_login)
 
 
+# ---job---
 
+app.add_url_rule("/job/<int:job_id>",methods=["GET"],
+                 view_func=job_info)
 
 @app.before_request
 def _before_request():

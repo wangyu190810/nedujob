@@ -1,6 +1,6 @@
 #! /usr/bin/python
 #-*- coding:utf-8 -*-
-#Filename: lagou.py
+#Filename: models.py
 #Author: wangyu190810
 #E-mail: wo190810401@gmail.com
 #Date: 2014-11-04
@@ -22,5 +22,4 @@ class Lagou(Base):
         for message in self.content:
             company_url = self.base_site.get_content(str(message),"a",0)
             print company_url
-
 

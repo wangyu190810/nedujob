@@ -5,8 +5,8 @@
 {% block content %}
     {% for job in jobs %}
       <div class="blog-post">
-        <h3 class="blog-post-title"><a href="/job/{{ job.id }}"> {{ job.company }}</a></h3>
-        <!--<p class="blog-post-meta">{{ job.create_time }} </p>-->
+        <h3 class="blog-post-title"> {{ job.company }}</h3>
+        <p class="blog-post-meta">{{ job.create_time }} </p>
         <p>
 
       </div>

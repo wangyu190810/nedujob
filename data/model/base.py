@@ -7,23 +7,26 @@
 #Description: 
 
 from sqlalchemy.schema import MetaData
+from sqlalchemy.orm import sessionmaker,scoped_session
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import as_declarative
 
 
-metadata = MetaData()
 from config import Config
 
+from sqlalchemy.schema import MetaData
+from sqlalchemy.ext.declarative import declarative_base
 
 
-@as_declarative(metadata=metadata)
-class Base(object):
-    pass
-
+metadata = MetaData()
+Base = declarative_base()
 
 engine = create_engine(Config.db,echo=True)
 
-def conn():
+DBSession = scoped_session(sessionmaker(bind=engine))
+
+
+def connection():
     connection = engine.connect()
     return connection
 
