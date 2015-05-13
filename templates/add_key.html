@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}edit{% endblock %}
+{% block content %}
+    <form method="post">
+        分类<select name="job_key">
+                {% for data in datas %}
+                    <option value="{{data.job_key}}">{{data.job_key}}</option>
+                {% endfor %}
+            </select>
+        <p></p>
+      <input type="text" name="job_data">填写关键字</p>
+      <input type="submit">
+    </form>
+
+{% endblock %}

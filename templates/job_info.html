@@ -5,9 +5,11 @@
 {% block content %}
     {% for job in jobs %}
       <div class="blog-post">
-        <h3 class="blog-post-title"> {{ job.company }}</h3>
+        <h3 class="blog-post-title"> {{ job.title }}</h3>
         <p class="blog-post-meta">{{ job.create_time }} </p>
-        <p>
+
+        <p class="blog-post-meta">{{ job.skill}}</p>
+          <p class="modal-content">{{ job.content }}</p>
 
       </div>
     {% endfor %}

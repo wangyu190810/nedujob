@@ -19,9 +19,7 @@ def user_login():
         user = User.login_user(g.db, email, phone, password)
         if user:
             session["user_id"] = str(user.id)
-            user_info = {"user": user.phone,
-                         "status": True}
-            return json.dumps(user_info)
+            return render_template("admin.html")
     return render_template("login.html")
 
 

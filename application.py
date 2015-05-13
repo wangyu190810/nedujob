@@ -12,6 +12,7 @@ from config import Config
 
 from views.user import user_login,user_register
 from views.index import index_job_info,index_job_info_site
+from views.admin import admin_index,admin_add_data_key
 from views.job import job_info
 
 
@@ -45,6 +46,15 @@ app.add_url_rule("/login", methods=["GET", "POST"],
 
 app.add_url_rule("/job/<int:job_id>",methods=["GET"],
                  view_func=job_info)
+
+
+# ---admin---
+
+app.add_url_rule("/admin", methods=["GET"],
+                 view_func=admin_index)
+app.add_url_rule("/admin_add_data_key",methods=["POST","GET"],
+                 view_func=admin_add_data_key)
+
 
 @app.before_request
 def _before_request():
