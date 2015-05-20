@@ -38,16 +38,17 @@ class Job(Base):
 
     @classmethod
     def add_data_from_lagou(cls,connection, company, company_link,
-                            skill, company_info, salary,
+                            skill, company_info, salary,title,
                             info_link=None,field=None,scale=None,
-                            CEO=None,stage=None,adderss=None):
+                            CEO=None,stage=None,address=None):
         u"""lagou来的数据"""
         job = Job(company=company, company_link=company_link,
                   skill=skill, info_link=info_link,
                   company_info=company_info,field=field,
                   stage=stage,CEO=CEO,
                   salary=salary,scale=scale,
-                  adderss=adderss,source=u"lagou"
+                  address=address,source=u"lagou",
+                  title=title
                 )
         connection.add(job)
         connection.commit()

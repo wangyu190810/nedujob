@@ -5,7 +5,7 @@ import json
 
 from flask import redirect, render_template, g, request, session
 
-from libs.lib import set_password_salt, email_and_phone
+from libs.lib import set_password_salt, email_and_phone,user_email_check
 from config import Config
 from models.user import User
 
@@ -18,8 +18,13 @@ def user_login():
         password = set_password_salt(data.get("password"))
         user = User.login_user(g.db, email, phone, password)
         if user:
-            session["user_id"] = str(user.id)
-            return render_template("admin.html")
+            if user.status == 1:
+                session["user_id"] = str(user.id)
+                return render_template("admin.html")
+            elif user.status == 0:
+                return render_template("index.html")
+            else:
+                return render_template("index.html")
     return render_template("login.html")
 
 
@@ -30,7 +35,9 @@ def user_register():
         email, phone = email_and_phone(data.get("user"))
         password = set_password_salt(data.get("password"))
         if User.register(g.db, email, phone, password, Config.pic):
-            return redirect("/login")
+            from application import mailbox
+            if user_email_check(email, mailbox):
+                return redirect("/login")
     return render_template("register.html")
 
 
@@ -38,3 +45,8 @@ def user_logout():
     u"""用户注销"""
     session.pop("user_id")
     return redirect("/")
+
+
+def check_user_email():
+    return json.dumps({"status": True})
+

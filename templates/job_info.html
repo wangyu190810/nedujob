@@ -8,9 +8,18 @@
         <h3 class="blog-post-title"> {{ job.title }}</h3>
         <p class="blog-post-meta">{{ job.create_time }} </p>
 
-        <p class="blog-post-meta">{{ job.skill}}</p>
+        <p class="bottom" ><button id = "123">{{ job.skill}}</button></p>
           <p class="modal-content">{{ job.content }}</p>
 
       </div>
+
     {% endfor %}
 {% endblock %}
+
+   <script>
+            $(document).ready(function(){
+                $("button").click(function() {
+                    $("#123").hide();
+                });
+                });
+        </script>

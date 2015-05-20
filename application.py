@@ -7,13 +7,15 @@ from datetime import timedelta
 from flask import Flask, g, current_app
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
+from flask.ext.email import ConsoleMail
+from flask_mail import Mail
 
 from config import Config
 
-from views.user import user_login,user_register
+from views.user import user_login,user_register,check_user_email
 from views.index import index_job_info,index_job_info_site
 from views.admin import admin_index,admin_add_data_key
-from views.job import job_info
+from views.job import job_info,add_job_tag
 
 
 app = Flask(__name__)
@@ -24,6 +26,8 @@ app.config["SQLALCHEMY_DATABASE_URI"] = Config.db
 app.sa_engine = create_engine(Config.db)
 app.DBSession = scoped_session(sessionmaker(bind=app.sa_engine))
 
+mail = Mail(app)
+mail.init_mail(Config.email)
 
 # ---index---
 
@@ -40,13 +44,15 @@ app.add_url_rule("/register", methods=["GET", "POST"],
                  view_func=user_register)
 app.add_url_rule("/login", methods=["GET", "POST"],
                  view_func=user_login)
-
+app.add_url_rule("/check_email",methods=["GET"],
+                 view_func=check_user_email)
 
 # ---job---
 
 app.add_url_rule("/job/<int:job_id>",methods=["GET"],
                  view_func=job_info)
-
+app.add_url_rule("/add_job_tag",methods=["POST"],
+                 view_func=add_job_tag)
 
 # ---admin---
 

@@ -2,8 +2,11 @@
 __author__ = 'Administrator'
 import hashlib
 from functools import wraps
+from itsdangerous import Signer
 
 from flask import session, redirect
+from flask_mail import Message
+
 
 from config import Config
 
@@ -37,5 +40,33 @@ def validate_user_login(func):
         return redirect("/login")
     return _validate_user_login
 
-from datetime import time, tzinfo,timedelta
 
+def set_email_safe(email_address):
+    s = Signer(Config.email_check)
+    return s.sign(email_address)
+
+
+def get_email_safe(email_address):
+    s = Signer(Config.email_check)
+    return s.unsign(email_address)
+
+
+def get_email_link(email_address):
+    content = u"""<p>亲爱的用户你好</p> 您已经注册了nudejob网站，为了验证码您邮箱的有效性，请点击链接"""
+    content = content + Config.address + set_email_safe(email_address)
+    return content
+
+
+def user_email_check(email_address, mail):
+    u"""用户邮箱验证"""
+    with mail.connect() as conn:
+        email = Message(
+            u"用户邮箱真实性验证",
+            sender=Config.email.get("MAIL_DEFAULT_SENDER"),
+            recipients=["190810401@qq.com"],
+
+
+        )
+        email.html = get_email_link(email_address)
+    conn.send(email)
+    return True

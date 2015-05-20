@@ -17,11 +17,17 @@ from bs4 import BeautifulSoup
 
 # 拿到网站的链接，返回html文件，等待对应的模块解析各自的文件
 class Base(object):
+
     def __init__(self,site=None):
+
         if site is None:
             raise
         else:
             self.site = site
+
+    @classmethod
+    def get_site(cls):
+        return
 
     # 解析请求数据，最后返回字符串
     def request_site(self):
@@ -36,15 +42,22 @@ class Base(object):
             return html 
     
     # 返回符合查找的信息列表
-    def get_content(self,site_file=None,name=None,tag=None):
+    @classmethod
+    def get_content(cls,site_file=None,name=None,tag=None):
         if (site_file or tag) is None:
             raise
         else:
             soup = BeautifulSoup(site_file)
-            if tag == 1:
+            if tag is None:
+                return soup
+            if tag == "class":
                 content = soup.find_all(class_ = re.compile(name))
-            elif tag ==0:
+            elif tag == "html":
                 content = soup.find_all(name)
+            elif tag == "title":
+                content = soup.title.string
+            elif tag == "text":
+                content = soup.body
             return content
     
     # 图片下载
