@@ -5,10 +5,18 @@
 {% block content %}
     {% for job in jobs %}
       <div class="blog-post">
-        <h3 class="blog-post-title"><a href="/job/{{ job.id }}"> {{ job.title }}</a></h3>
-        <!--<p class="blog-post-meta">{{ job.create_time }} </p>-->
+        <a href="/job/{{ job.id }}"><strong> {{ job.title }}</strong></a>
+        <p class="fa-times" id = {{ job.create_time }}>{{ job.create_time }} </p>
         <p>
+<script>
 
+        timeStamp_value = document.getElementById("{{job.create_time}}").innerText
+        var thedata = new Date(timeStamp_value * 1000);
+        dataSting = thedata.toLocaleString()
+        document.getElementById("{{job.create_time}}").innerHTML = "<strong>发布时间:</strong>" + dataSting;
+
+</script>
       </div>
     {% endfor %}
 {% endblock %}
+

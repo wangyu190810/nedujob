@@ -9,7 +9,7 @@ from datetime import datetime
 from time import time
 
 from sqlalchemy.schema import Column,Table
-from sqlalchemy.types import UnicodeText,Integer,Unicode,String,DateTime,Date
+from sqlalchemy.types import UnicodeText,Integer,Unicode,String,DateTime,Date,TEXT
 from sqlalchemy import func
 from base import Base
 
@@ -22,14 +22,15 @@ class Job(Base):
     company = Column(Unicode(255),doc=u"公司")
     title = Column(Unicode(255),doc=u"数据标题")
     content = Column(Unicode(2000),doc=u"数据内容原文")
-    content_rendered = Column(Unicode(2000),doc=u"数据内容html")
+    content_rendered = Column(TEXT,doc=u"数据内容html")
     company_link = Column(Unicode(255),doc=u"公司链接")
     address = Column(Unicode(255),doc=u"公司地址")
     info_link = Column(Unicode(255),doc=u"信息链接")
     CEO = Column(Unicode(255),doc=u"公司创始人")
     salary = Column(Unicode(255),doc=u"公司薪水")
     skill = Column(Unicode(255),doc=u"技能")
-    create_time = Column(Integer,default=lambda: time(), doc=u"发布时间")
+    create_time = Column(Integer,default=lambda: time(), doc=u"采集时间")
+    publish_time = Column(Unicode(255),doc=u"发布时间")
     company_info = Column(Unicode(1000),doc=u"公司简介")
     field = Column(Unicode(255),doc=u"公司领域")
     scale = Column(Unicode(255),doc=u"公司规模")
@@ -39,7 +40,8 @@ class Job(Base):
     @classmethod
     def add_data_from_lagou(cls,connection, company, company_link,
                             skill, company_info, salary,title,
-                            info_link=None,field=None,scale=None,
+                            info_link,content,content_rendered,
+                            publish_time,field=None,scale=None,
                             CEO=None,stage=None,address=None):
         u"""lagou来的数据"""
         job = Job(company=company, company_link=company_link,
@@ -48,7 +50,10 @@ class Job(Base):
                   stage=stage,CEO=CEO,
                   salary=salary,scale=scale,
                   address=address,source=u"lagou",
-                  title=title
+                  title=title,
+                  content=content,
+                  content_rendered=content_rendered,
+                  publish_time = publish_time
                 )
         connection.add(job)
         connection.commit()

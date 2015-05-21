@@ -1,17 +1,39 @@
 # -*-coding:utf-8-*-
 __author__ = 'Administrator'
 
+import time
 
 from data.view.views import V2ex,LaGou
 
 
 if __name__ == "__main__":
-    #v2ex = V2ex("https://www.v2ex.com/api/topics/latest.json")
-   # print v2ex.get_content(v2ex.request_site(),)
-    #v2ex.get_content(v2ex.request_site())
-    lagou = LaGou("http://www.lagou.com/jobs/603100.html")
-    site_file = lagou.request_site()
-    lagou.get_content(site_file,lagou.site)
+    link_num = 424635
+    while True:
+
+        v2ex = V2ex("https://www.v2ex.com/api/topics/latest.json")
+        v2ex.get_content(v2ex.request_site())
+        link = "http://www.lagou.com/jobs/"+str(link_num)+".html"
+        lagou = LaGou(link)
+        try:
+            site_file = lagou.request_site()
+            lagou.get_content(site_file,lagou.site)
+        except:
+            print link_num
+        finally:
+            time.sleep(60)
+            link_num += 1
+        if link_num == 682916:
+            break
+
+
+    # while True:
+    #     link_num = 603100
+    #     link = "http://www.lagou.com/jobs/"+str(link_num)+".html"
+    #     lagou = LaGou(link)
+    #     with lagou.request_site() as site_file:
+    #         lagou.get_content(site_file,lagou.site)
+    #     link_num += 1
+    #     time.sleep(10)
     # print lagou.get_content(site_file, tag="title")
     # print lagou.get_content(site_file, name="job_request", tag="class")
     # print lagou.get_content(site_file, name="job_bt", tag="class")

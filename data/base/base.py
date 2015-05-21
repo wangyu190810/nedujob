@@ -21,7 +21,7 @@ class Base(object):
     def __init__(self,site=None):
 
         if site is None:
-            raise
+            raise RuntimeError
         else:
             self.site = site
 
@@ -36,14 +36,14 @@ class Base(object):
                 )
         if site_html.status_code != 200:
             print site_html.status_code
-            raise
+            raise requests.HTTPError
         else:
             html = site_html.text
             return html 
     
     # 返回符合查找的信息列表
     @classmethod
-    def get_content(cls,site_file=None,name=None,tag=None):
+    def get_content(cls,site_file=None,name=None,tag=None,div=None):
         if (site_file or tag) is None:
             raise
         else:
@@ -51,7 +51,8 @@ class Base(object):
             if tag is None:
                 return soup
             if tag == "class":
-                content = soup.find_all(class_ = re.compile(name))
+                content = BeautifulSoup(str(soup.find(name=div,class_ = re.compile(name))))
+
             elif tag == "html":
                 content = soup.find_all(name)
             elif tag == "title":

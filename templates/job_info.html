@@ -5,11 +5,23 @@
 {% block content %}
     {% for job in jobs %}
       <div class="blog-post">
-        <h3 class="blog-post-title"> {{ job.title }}</h3>
-        <p class="blog-post-meta">{{ job.create_time }} </p>
-
-        <p class="bottom" ><button id = "123">{{ job.skill}}</button></p>
-          <p class="modal-content">{{ job.content }}</p>
+        <h2 class="blog-post-title"> {{ job.title }}</h2>
+        <p class="fa-times" >
+            {%if job.publish_time%}
+            {{job.publish_time}}
+            {%else%}
+            {{job.create_time}}}
+            {%endif%}
+        </p>
+        <p class="panel-info"><strong>基本要求：</strong> {{ job.skill}}</p>
+          <p class="modal-content">
+              {%if job.content_rendered %}
+                {{ job.content_rendered|safe }}
+              {%else%}
+                {{ job.content }}
+              {%endif%}
+             <a class="highlight-link" href="{{job.info_link}}">原网站地址链接</a>
+          </p>
 
       </div>
 
