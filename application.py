@@ -7,7 +7,6 @@ from datetime import timedelta
 from flask import Flask, g, current_app
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy import create_engine
-from flask.ext.email import ConsoleMail
 from flask_mail import Mail
 
 from config import Config
