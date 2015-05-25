@@ -1,3 +1,7 @@
 Flask
 Sqlalchemy
+psycopg2
+Flask-Mail
+Bs4
+requests
 
