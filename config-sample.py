@@ -27,7 +27,7 @@ class Config(object):
 
         # 163 authentication
         "MAIL_USERNAME": "wo190810401@163.com",
-        "MAIL_PASSWORD": "wangyu190810",
+        "MAIL_PASSWORD": "xxxxxxx",
 
         # mail accounts
         "MAIL_DEFAULT_SENDER": 'wo190810401@163.com'
