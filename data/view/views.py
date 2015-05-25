@@ -17,12 +17,13 @@ class V2ex(Base):
         for data in datas:
             title = data.get("title")
             mark = 0
+            tag = list()
             job_key = JobData.get_nedu_job_main_data(DBSession,job_key="job_key")
             for row in job_key.data:
                 print row
                 if row in title:
                     mark = 1
-                    break
+                    tag.append(row)
             if mark == 1:
                 title = data.get("title")
                 url = data.get("url")
@@ -33,7 +34,8 @@ class V2ex(Base):
                 print content_rendered
                 Job.add_data_from_v2ex(DBSession, title=title,
                                        info_link=url, skill=skill.get("name"),
-                                       content=content,content_rendered=content_rendered)
+                                       content=content,content_rendered=content_rendered,
+                                       tag=tag)
 
 
 class LaGou(Base):
@@ -65,13 +67,12 @@ class LaGou(Base):
         print(address)
         skill_time = str(company_req[2])[6:len(str(company_req[2]))-7]
         skill_education = str(company_req[3])[6:len(str(company_req[3]))-7]
-
-        # job_key = JobData.get_nedu_job_main_data(DBSession,job_key="job_key")
-        # for row in job_key.data:
-        #     if row in title:
-        #         skill = row
-        #         break
-        # print(skill)
+        tag = list()
+        job_key = JobData.get_nedu_job_main_data(DBSession,job_key="job_key")
+        for row in job_key.data:
+            if row in content.text:
+                tag = tag.append(row)
+        print(skill)
         print(skill_time)
         print(skill_education)
         company_info = company.text
@@ -87,7 +88,8 @@ class LaGou(Base):
                                 address=address,
                                 content=content.text,
                                 content_rendered=str(content),
-                                publish_time=publish_time)
+                                publish_time=publish_time,
+                                tag=tag)
 
     # print lagou.get_content(site_file, name="job_request", tag="class")
     # print lagou.get_content(site_file, name="job_bt", tag="class")

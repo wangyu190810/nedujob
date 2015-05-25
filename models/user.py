@@ -18,7 +18,7 @@ class User(Base):
     username = Column(String(80), doc=u"用户名")
     password = Column(String(80), doc=u"密码")
     email = Column(String(80), unique=True, doc=u"邮箱")
-    status = Column(Integer,doc=u"用户状态，0表示刚刚注册，没有验证邮箱，1表示验证通过，可以登陆的用户，2表示被列入黑名单的用户",)
+    status = Column(Integer,doc=u"用户状态，0表示刚刚注册，没有验证邮箱，1表示验证通过，可以登陆的用户，2表示被列入黑名单的用户,8表示root用户",)
     phone = Column(Unicode(13), unique=True, doc=u"电话", index=True)
     checknum = Column(Integer, doc=u"验证码")
     checknum_time = Column(Integer, doc=u"验证码时间")

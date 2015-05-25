@@ -3,6 +3,7 @@ __author__ = 'Administrator'
 import hashlib
 from functools import wraps
 from itsdangerous import Signer
+import json
 
 from flask import session, redirect
 from flask_mail import Message
@@ -70,3 +71,13 @@ def user_email_check(email_address, mail):
         email.html = get_email_link(email_address)
     conn.send(email)
     return True
+
+
+def get_page(contents):
+    page_list = list()
+    for content in contents:
+        page_list.append(content)
+    if len(page_list) / 20:
+        status = {"page":[pages for pages in range(len(page_list)/20)]}
+        return json.dumps(status)
+    return None

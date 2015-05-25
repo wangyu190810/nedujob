@@ -6,14 +6,17 @@
     {% for job in jobs %}
       <div class="blog-post">
         <h2 class="blog-post-title"> {{ job.title }}</h2>
-        <p class="fa-times" >
-            {%if job.publish_time%}
-            {{job.publish_time}}
+        {%if job.publish_time%}
+          <p class="fa-times" >
+            <strong>{{job.publish_time}}</strong>
             {%else%}
-            {{job.create_time}}}
+          <p class="fa-times" id="{{job.create_time}}">
+            {{job.create_time}}
             {%endif%}
         </p>
         <p class="panel-info"><strong>基本要求：</strong> {{ job.skill}}</p>
+          <p id = get_skill({{job.tag}})></p>
+          <p id = "skill_tag"></p>
           <p class="modal-content">
               {%if job.content_rendered %}
                 {{ job.content_rendered|safe }}
@@ -22,16 +25,24 @@
               {%endif%}
              <a class="highlight-link" href="{{job.info_link}}">原网站地址链接</a>
           </p>
+          <script>
+            timeStamp_value = document.getElementById("{{job.create_time}}").innerText
+            var thedata = new Date(timeStamp_value * 1000);
+            dataSting = thedata.toLocaleString()
+            document.getElementById("{{job.create_time}}").innerHTML = "<strong>发布时间:</strong>" + dataSting;
+        </script>
+          <script>
+              function get_skill(skill){
+                  var index;
+                  var text = "";
+                  for(index=0;index<skill.length;index++) {
+                      text += ":" + skill[index] + ":";
+                  }
+                  document.getElementById("skill_tag").innerHTML = text;
+              }
 
+          </script>
       </div>
 
     {% endfor %}
 {% endblock %}
-
-   <script>
-            $(document).ready(function(){
-                $("button").click(function() {
-                    $("#123").hide();
-                });
-                });
-        </script>

@@ -16,6 +16,7 @@ from views.user import user_login,user_register,check_user_email
 from views.index import index_job_info,index_job_info_site
 from views.admin import admin_index,admin_add_data_key
 from views.job import job_info,add_job_tag
+from views.comment import get_comment,post_comment
 
 
 app = Flask(__name__)
@@ -44,8 +45,12 @@ app.add_url_rule("/register", methods=["GET", "POST"],
                  view_func=user_register)
 app.add_url_rule("/login", methods=["GET", "POST"],
                  view_func=user_login)
-app.add_url_rule("/check_email",methods=["GET"],
+app.add_url_rule("/check_email", methods=["GET"],
                  view_func=check_user_email)
+app.add_url_rule("/user/comment", methods=["GET"],
+                 view_func=get_comment)
+app.add_url_rule("/user/postcomment",methods=["POST"],
+                 view_func=post_comment)
 
 # ---job---
 

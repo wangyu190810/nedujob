@@ -6,8 +6,12 @@
     {% for job in jobs %}
       <div class="blog-post">
         <a href="/job/{{ job.id }}"><strong> {{ job.title }}</strong></a>
+          {%if job.publish_time%}
+            <p class="fa-times" >{{job.publish_time}}</p>
+          {%else%}
         <p class="fa-times" id = {{ job.create_time }}>{{ job.create_time }} </p>
-        <p>
+          {%endif%}
+
 <script>
 
         timeStamp_value = document.getElementById("{{job.create_time}}").innerText
@@ -17,6 +21,14 @@
 
 </script>
       </div>
+    {% endfor %}
+{% endblock %}
+
+{% block tag%}
+    {%for tag in tags%}
+        {%if tag.tag %}
+                <p class="fa-tag" >{{row}}</p>
+        {%endif%}
     {% endfor %}
 {% endblock %}
 
