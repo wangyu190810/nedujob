@@ -35,8 +35,8 @@ def user_register():
         email, phone = email_and_phone(data.get("user"))
         password = set_password_salt(data.get("password"))
         if User.register(g.db, email, phone, password, Config.pic):
-            from application import mailbox
-            if user_email_check(email, mailbox):
+            from application import mail
+            if user_email_check(email,mail):
                 return redirect("/login")
     return render_template("register.html")
 
