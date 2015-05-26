@@ -49,5 +49,6 @@ class JobData(Base):
     def get_nedu_job_key(cls,connection):
         return connection.query(JobData)
 
-# 表创建语句
-# Base.metadata.create_all(engine)
+
+def create_table():
+    Base.metadata.create_all(engine)

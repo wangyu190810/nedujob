@@ -12,7 +12,7 @@ from sqlalchemy.schema import Column,Table
 from sqlalchemy.types import UnicodeText,Integer,Unicode,String,DateTime,Date,TEXT
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy import func
-from base import Base
+from base import Base,engine
 
 
 class Job(Base):
@@ -99,4 +99,8 @@ class Job(Base):
     def get_all_tag(cls, connection):
         stmt = connection.query(Job.tag).all()
         return stmt
+
+
+def create_table():
+    Base.metadata.create_all(engine)
 
