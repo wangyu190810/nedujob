@@ -4,10 +4,13 @@
 
 {% block content %}
   <form class="form-signin" role="form" method="POST">
-    <input type="text" class="form-control-signin" name="user" placeholder="email or phone" required autofocus>
+    <input type="text" class="form-control-signin" name="email" placeholder="填写有效邮箱">
     <br><br>
-    <input type="password" class="form-control-signin" name="password" placeholder="Password" required>
+      <input type="text" class="form-control-sigin" name="username" placeholder="填写你的用户名">
     <br/><br/>
-    <button class="btn btn-info" type="submit">注册</button>
+    <input type="password" class="form-control-signin" name="password" placeholder="Password">
+    <br/><br/>
+
+      <button class="btn btn-info" type="submit">注册</button>
   </form>
 {% endblock %}

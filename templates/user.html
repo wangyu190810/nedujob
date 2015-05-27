@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}NeduJob{% endblock %}
+
+{% block content %}
+    {% for user in users %}
+      <div class="fa-user">
+        <a href="/user/{{user.id}}"><strong> {{ user.username }}</strong></a>
+        <img src="http://127.0.0.1:8888/static/img/nedujob.jpg" alt="头像">
+      </div>
+    {% endfor %}
+{% endblock %}
+
+{% block tag%}
+    {%for tag in tags%}
+        {%if tag.tag %}
+                <p class="fa-tag" >{{row}}</p>
+        {%endif%}
+    {% endfor %}
+{% endblock %}
+

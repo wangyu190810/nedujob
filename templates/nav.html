@@ -16,21 +16,27 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="/index">最新工作</a></li>
-        <li><a href="/info/v2ex">v2ex专区</a></li>
-        <li><a href="/info/lagou">拉钩专区</a></li>
-        <li><a href="/info/zhilian">智联专区</a></li>
+        <li><a href="/filter">条件筛选</a></li>
+        <!--<li><a href="/info/v2ex">v2ex专区</a></li>-->
+        <!--<li><a href="/info/lagou">拉钩专区</a></li>-->
+        <!--<li><a href="/info/zhilian">智联专区</a></li>-->
         <li><a href="/user/comment">用户反馈</a></li>
         <div class="form-group navbar-form navbar-right">
-          <form method="post" action="#">
+          <form method="get" action="/search">
             <input type="text" class="form-control" name="search" placeholder="搜,你能想到的一切">
+              <button>search</button>
           </form>
         </div>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/login">登录</a></li>
-          <li><a href="/register">注册</a></li>
-        <li><a href="/logout">退出</a></li>
+          {%if g.user.password%}
+          <li><a href="/user">{{g.user.username}}</a></li>
+          <li><a href="/logout">退出</a></li>
+
+          {% else %}
+             <li><a href="/login">登录</a></li>
+            <li><a href="/register">注册</a></li>
+          {% endif%}
       </ul>
     </div>
   </div>

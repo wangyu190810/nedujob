@@ -28,3 +28,17 @@ def add_job_tag():
         return json.dumps(result)
     result = {"status": "success"}
     return json.dumps(result)
+
+
+def search_job():
+    if request.method == "GET":
+        search = request.args.get("search")
+        print request.args
+        search_data = Job.search_job(g.db, search)
+        return render_template("search.html", jobs=search_data)
+
+
+def search_more_requirement():
+    if request.method == "GET":
+        return render_template("filter.html")
+

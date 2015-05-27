@@ -39,9 +39,9 @@ class User(Base):
                 filter(User.password == password).scalar()
 
     @classmethod
-    def register(cls,connection,email,phone,password,pic):
+    def register(cls,connection,email,password,pic,username):
         u"""用户注册"""
-        user = User(email=email,phone=phone,password=password,pic=pic,status=1)
+        user = User(email=email,password=password,pic=pic,status=1,username=username)
         connection.add(user)
         connection.commit()
         return True
@@ -64,3 +64,8 @@ class User(Base):
             connection.commit()
             return True
         return False
+
+
+    @classmethod
+    def get_user(cls,connection,user_id):
+        return connection.query(User).filter(User.id == user_id)

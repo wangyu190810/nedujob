@@ -100,3 +100,9 @@ class Job(Base):
         stmt = connection.query(Job.tag).all()
         return stmt
 
+    @classmethod
+    def search_job(cls, connection, search):
+        return connection.query(Job).\
+            filter(Job.content_rendered.like("%"+search+"%")).\
+            order_by(Job.id.desc())
+

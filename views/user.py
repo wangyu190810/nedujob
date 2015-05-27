@@ -20,7 +20,7 @@ def user_login():
         if user:
             if user.status == 1:
                 session["user_id"] = str(user.id)
-                return render_template("admin.html")
+                return redirect("/user")
             elif user.status == 0:
                 return render_template("index.html")
             else:
@@ -32,13 +32,24 @@ def user_register():
     u"""用户注册"""
     if request.method == "POST":
         data = request.form
-        email, phone = email_and_phone(data.get("user"))
+        email = data.get("email")
+        username  = data.get("username")
         password = set_password_salt(data.get("password"))
-        if User.register(g.db, email, phone, password, Config.pic):
+
+        if User.register(g.db, email,password, Config.pic,username):
             from application import mail
             if user_email_check(email,mail):
                 return redirect("/login")
     return render_template("register.html")
+
+
+def get_user(user_id):
+    return render_template("user.html",users=User.get_user(g.db,user_id))
+
+
+def get_user_info():
+    user_id = session.get("user_id")
+    return render_template("user.html",users=User.get_user(g.db,user_id))
 
 
 def user_logout():
