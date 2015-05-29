@@ -3,13 +3,13 @@
 application.pyc
 *.pyc
 .idea
-
+*idea
 *.py[ocd]
 
 doc/*
 
 
 
-config.py
+*config.py
 
 
