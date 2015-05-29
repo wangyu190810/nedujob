@@ -9,6 +9,27 @@
     <input type="submit" value="根据日期查询">
 </form>
 
+{% for job in jobs %}
+      <div class="blog-post">
+        <a href="/job/{{ job.id }}"><strong> {{ job.title }}</strong></a>
+          {%if job.publish_time%}
+            <p class="fa-times" >{{job.publish_time}}</p>
+          {%else%}
+        <p class="fa-times" id = {{ job.create_time }}>{{ job.create_time }} </p>
+          {%endif%}
+
+<script>
+
+//        timeStamp_value = document.getElementById("{{job.create_time}}").
+        var thedata = new Date({{job.create_time}} * 1000);
+        dataSting = thedata.toLocaleString();
+        document.getElementById("{{job.create_time}}").innerHTML = "<strong>发布时间:</strong>" + dataSting
+
+</script>
+      </div>
+    {% endfor %}
+
+
 <script type="text/javascript">
 $(document).ready(function() {
   $('input[name="daterange"]').daterangepicker();

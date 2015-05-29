@@ -14,10 +14,10 @@
 
 <script>
 
-        timeStamp_value = document.getElementById("{{job.create_time}}").innerText
-        var thedata = new Date(timeStamp_value * 1000);
-        dataSting = thedata.toLocaleString()
-        document.getElementById("{{job.create_time}}").innerHTML = "<strong>发布时间:</strong>" + dataSting;
+//        timeStamp_value = document.getElementById("{{job.create_time}}").
+        var thedata = new Date({{job.create_time}} * 1000);
+        dataSting = thedata.toLocaleString();
+        document.getElementById("{{job.create_time}}").innerHTML = "<strong>发布时间:</strong>" + dataSting
 
 </script>
       </div>

@@ -106,3 +106,8 @@ class Job(Base):
             filter(Job.content_rendered.like("%"+search+"%")).\
             order_by(Job.id.desc())
 
+    @classmethod
+    def search_job_create_time(cls,connection,start_time,end_time):
+        return connection.query(Job).\
+            filter(Job.create_time > start_time).\
+            filter(Job.create_time < end_time).order_by(Job.id.desc())
