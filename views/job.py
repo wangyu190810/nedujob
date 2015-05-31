@@ -2,16 +2,21 @@
 __author__ = 'Administrator'
 
 from data.model.models import Job
+from libs.lib import get_page_nums
 from models.user import User
 import time
 import json
+
+import paginate_sqlalchemy
+
 
 from flask import redirect,render_template,request,g,session
 
 
 def job_info(job_id):
     if request.method == "GET":
-        return render_template("job_info.html", jobs=Job.get_job_info(g.db, job_id))
+        return render_template("job_info.html",
+                               jobs=Job.get_job_info(g.db, job_id))
 
 
 def job_info_site(site):
@@ -50,9 +55,19 @@ def search_more_requirement():
             start_time = time.mktime(time.strptime(str(start_time),r"%m/%d/%Y  %H:%M:%S"))
             end_time = time.mktime(time.strptime(str(end_time),r" %m/%d/%Y %H:%M:%S"))
             jobs = Job.search_job_create_time(g.db,start_time,end_time)
-            return render_template("filter.html",jobs = jobs)
+            page = request.args.get("page")
+            return render_template("filter.html",
+                                   jobs = paginate_sqlalchemy.SqlalchemyOrmPage(jobs,page=page,items_per_page=20),
+                                   date=date,
+                                   page_nums=get_page_nums(jobs))
         return render_template("filter.html")
+
 
 def get_some_message():
     if request.method == "GET":
-        return
+        return render_template("work_message.html")
+
+
+
+
+

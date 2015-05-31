@@ -17,6 +17,9 @@
         <p class="panel-info"><strong>基本要求：</strong> {{ job.skill}}</p>
           <p id = get_skill({{job.tag}})></p>
           <p id = "skill_tag"></p>
+          {%for tag in job.tas%}
+              {{tag}}
+              {%endfor%}
           <p class="modal-content">
               {%if job.content_rendered %}
                 {{ job.content_rendered|safe }}

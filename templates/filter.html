@@ -36,17 +36,29 @@ $(document).ready(function() {
 });
 </script>
 
+{%if date%}
+
 
 <ul class="pagination">
   <li><a href="#">&laquo;</a></li>
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
+    {%for row in range(page_nums)%}
+        {%if row< 4 %}
+        <li><a href="/filter?daterange={{date}}&page={{row}}">{{row}}</a></li>
+        {%endif%}
+    {%endfor%}
+    <li><a>...</a></li>
+    {%for row in range(page_nums)%}
+        {%if row > page_nums-3%}
+        <li><a href="/filter?daterange={{date}}&page={{row}}">{{row}}</a></li>
+        {%endif%}
+     {%endfor%}
+
+
   <li><a href="#">&raquo;</a></li>
 </ul>
 
+
+{%endif%}
 
 {% endblock %}
 

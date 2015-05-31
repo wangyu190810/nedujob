@@ -77,37 +77,42 @@ class Job(Base):
 
 
     @classmethod
-    def get_job_info_index(cls,connection,limit_num,source=None):
+    def get_job_info_index(cls,connection,limit_num=None,source=None):
         u"""取出数据"""
         if source:
             return connection.query(Job).filter(Job.source == source).\
                 order_by(Job.id.desc()).limit(limit_num)
-        return connection.query(Job).order_by(Job.id.desc()).limit(limit_num)
-
+        if limit_num:
+            return connection.query(Job).order_by(Job.id.desc()).limit(limit_num)
+        return connection.query(Job).order_by(Job.id.desc())
 
     @classmethod
     def get_job_info(cls,connection,job_id):
+        u"""具体工作的具体信息"""
         return connection.query(Job).filter(Job.id == job_id)
 
 
     @classmethod
     def get_all_job(cls, connection):
         u"""所有的工作"""
-        return connection.query(Job)
+        return connection.query(Job).order_by(Job.id.desc())
 
     @classmethod
     def get_all_tag(cls, connection):
+        u"""所有标签"""
         stmt = connection.query(Job.tag).all()
         return stmt
 
     @classmethod
     def search_job(cls, connection, search):
+        u"""工作内容查找"""
         return connection.query(Job).\
             filter(Job.content_rendered.like("%"+search+"%")).\
             order_by(Job.id.desc())
 
     @classmethod
     def search_job_create_time(cls,connection,start_time,end_time):
+        u"""根据时间查找"""
         return connection.query(Job).\
             filter(Job.create_time > start_time).\
             filter(Job.create_time < end_time).order_by(Job.id.desc())

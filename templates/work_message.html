@@ -7,7 +7,7 @@
       <div class="blog-post">
         <a href="/job/{{ job.id }}"><strong> {{ job.title }}</strong></a>
           {%if job.publish_time%}
-                <p class="fa-times" >{{job.publish_time}}</p>
+            <p class="fa-times" >{{job.publish_time}}</p>
           {%else%}
         <p class="fa-times" id = {{ job.create_time }}>{{ job.create_time }} </p>
           {%endif%}
@@ -26,19 +26,11 @@
 
 <ul class="pagination">
   <li><a href="#">&laquo;</a></li>
-    {%for row in range(page_nums)%}
-        {%if row< 4 %}
-        <li><a href="/index/{{row}}">{{row}}</a></li>
-        {%endif%}
-    {%endfor%}
-    <li><a>...</a></li>
-    {%for row in range(page_nums)%}
-        {%if row > page_nums-3%}
-        <li><a href="/index/{{row}}">{{row}}</a></li>
-        {%endif%}
-     {%endfor%}
-
-
+  <li><a href="#">1</a></li>
+  <li><a href="#">2</a></li>
+  <li><a href="#">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>
   <li><a href="#">&raquo;</a></li>
 </ul>
 

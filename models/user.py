@@ -69,3 +69,17 @@ class User(Base):
     @classmethod
     def get_user(cls,connection,user_id):
         return connection.query(User).filter(User.id == user_id)
+
+    @classmethod
+    def get_admin_login(cls,connection,username,password):
+
+        stmt =  connection.query(User).\
+            filter(User.email == username).\
+            filter(User.password == password).\
+            filter(User.status == 100).scalar()
+        if stmt is None:
+            return None
+        return stmt
+
+
+

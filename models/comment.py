@@ -7,6 +7,7 @@ from sqlalchemy import Column, String, Integer, Unicode, Float, func,Text
 from sqlalchemy.dialects.postgresql import JSONB
 
 from models.base import Base
+from models.user import User
 
 
 class Comment(Base):
@@ -31,7 +32,7 @@ class Comment(Base):
         u"""获取所有的留言"""
         if status is None:
             return connection.query(Comment).order_by(Comment.id.desc())
-        return connection.query(Comment).filter(Comment.status == status).order_by(Comment.id.desc())
+        return connection.query(Comment,User).join(User,User.id==Comment.user_id).filter(Comment.status == status).order_by(Comment.id.desc())
 
     @classmethod
     def set_comment_status(cls, connection, comment_id, status):

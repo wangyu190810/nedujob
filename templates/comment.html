@@ -3,11 +3,11 @@
 {% block title %}用户留言{% endblock %}
 
 {% block content %}
-    {%for comment in comments%}
+    {%for comment,user in comments%}
         <div class="panel panel-info">
             <div class="panel-heading">
                 <a href="{{comment.user_id}}">
-                    <h3 class="panel-title">{{comment.user_id}}</h3>
+                    <h3 class="panel-title">{{user.username}}</h3>
 </a>
             </div>
             <div class="panel-body" ><p>{{comment.user_comment}}</p>
@@ -21,13 +21,13 @@
 
 <ul class="pagination">
   <li><a href="#">&laquo;</a></li>
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
+    {%for row in range(page_nums)%}
+        <li><a href="/comment/{{row}}">{{row}}</a></li>
+    {%endfor%}
+
   <li><a href="#">&raquo;</a></li>
 </ul>
+
 
 {% endblock %}
 
@@ -37,7 +37,7 @@
 
 
     <div class="text-center">
-    <form action="/user/postcomment" method="post" role="form">
+    <form action="/postcomment" method="post" role="form">
         <div class="form-group">
             <label for="name">留言板</label>
             <textarea class="form-control" rows="3" name="comment" placeholder="感谢你的意见和建议"></textarea>

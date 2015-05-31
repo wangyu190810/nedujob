@@ -42,6 +42,15 @@ def validate_user_login(func):
     return _validate_user_login
 
 
+def validate_admin_login(func):
+    @wraps(func)
+    def _validate_admin_login(*args, **kwargs):
+        if "username" in session:
+            return func(*args, **kwargs)
+        return redirect("/admin_login")
+    return _validate_admin_login
+
+
 def set_email_safe(email_address):
     s = Signer(Config.email_check)
     return s.sign(email_address)
@@ -73,11 +82,11 @@ def user_email_check(email_address, mail):
     return True
 
 
-def get_page(contents):
+def get_page_nums(contents):
     page_list = list()
     for content in contents:
         page_list.append(content)
+    page_nums = 1
     if len(page_list) / 20:
-        status = {"page":[pages for pages in range(len(page_list)/20)]}
-        return json.dumps(status)
-    return None
+        page_nums = len(page_list)/20
+    return page_nums

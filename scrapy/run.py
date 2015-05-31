@@ -7,7 +7,7 @@ from views import V2ex,LaGou
 
 
 if __name__ == "__main__":
-    link_num = 424700
+    link_num = 525000
     while True:
 
         v2ex = V2ex("https://www.v2ex.com/api/topics/latest.json")
