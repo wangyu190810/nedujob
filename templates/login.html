@@ -3,6 +3,16 @@
 {% block title %}登陆{% endblock %}
 
 {% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
   <form class="form-signin" role="form" method="POST">
     <input type="text" class="form-control-signin" name="user" placeholder="email or phone" required autofocus>
     <br><br>

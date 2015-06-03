@@ -12,13 +12,13 @@ from libs.lib import validate_user_login,validate_admin_login,set_password_salt
 
 @validate_admin_login
 def admin_index():
-    return render_template("admin.html", blogs=Job.get_all_job(g.db))
+    return render_template("admin/admin.html", blogs=Job.get_all_job(g.db))
 
 
 @validate_admin_login
 def admin_add_data_key():
     if request.method == "GET":
-        return render_template("add_key.html", datas=JobData.get_nedu_job_key(g.db))
+        return render_template("admin/add_key.html", datas=JobData.get_nedu_job_key(g.db))
     elif request.method == "POST":
         data = request.form
         job_key = data.get("job_key")
@@ -28,7 +28,7 @@ def admin_add_data_key():
 
 def admin_login():
     if request.method == "GET":
-        return render_template("admin_login.html")
+        return render_template("admin/admin_login.html")
     elif request.method == "POST":
         data = request.form
         username = data.get("username")
@@ -40,4 +40,17 @@ def admin_login():
             session["username"] = user.username
             return redirect("/admin")
         return redirect("/admin_login")
+
+
+@validate_admin_login
+def add_work_message():
+    if request.method == "GET":
+        return render_template("admin/add_work_message.html")
+    if request.method == "POST":
+        data = request.form
+        title = data.get("title")
+        content = data.get("content")
+        info_link = data.get("info_link")
+        Job.add_work_message(g.db,title,content,info_link)
+        return redirect("/admin")
 

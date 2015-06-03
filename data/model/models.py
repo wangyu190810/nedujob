@@ -116,3 +116,13 @@ class Job(Base):
         return connection.query(Job).\
             filter(Job.create_time > start_time).\
             filter(Job.create_time < end_time).order_by(Job.id.desc())
+
+    @classmethod
+    def add_work_message(cls,connection,title,content,info_link):
+        stmt = Job(title=title,content=content,source="work_message",info_link=info_link)
+        connection.add(stmt)
+        connection.commit()
+
+    @classmethod
+    def get_work_message(cls,connection):
+        return connection.query(Job).filter(Job.source == "work_message")

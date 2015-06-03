@@ -8,6 +8,8 @@ import json
 from flask import session, redirect
 from flask_mail import Message
 
+import smtplib
+from email.mime.text import MIMEText
 
 from config import Config
 
@@ -66,20 +68,34 @@ def get_email_link(email_address):
     content = content + Config.address + set_email_safe(email_address)
     return content
 
+def set_email_base(message,subject,email):
+    u"""邮件基础定义"""
+    meg = MIMEText(message.encode("utf-8"))
+    meg['From'] = Config.email.get("MAIL_DEFAULT_SENDER")
+    meg["SUbject"] = subject
+    meg["To"] = email
 
-def user_email_check(email_address, mail):
-    u"""用户邮箱验证"""
-    with mail.connect() as conn:
-        email = Message(
-            u"用户邮箱真实性验证",
-            sender=Config.email.get("MAIL_DEFAULT_SENDER"),
-            recipients=["190810401@qq.com"],
+    try:
+        s = smtplib.SMTP_SSL(Config.email.get("MAIL_SERVER"),Config.email.get("MAIL_PORT"))
+        print(s)
+        s.login(Config.email.get("MAIL_USERNAME"),Config.email.get("MAIL_PASSWORD"))
+        print("login_email")
+        s.sendmail(Config.email.get("MAIL_DEFAULT_SENDER"),email,meg.as_string())
+        print("send_email")
 
+    except IndexError:
+        pass
+    finally:
+        s.close()
 
-        )
-        email.html = get_email_link(email_address)
-    conn.send(email)
     return True
+
+
+def user_email_check(email_address):
+    u"""用户邮箱检测"""
+    if set_email_base(get_email_link(email_address), u"用户合法性验证", email_address):
+        return True
+    return False
 
 
 def get_page_nums(contents):

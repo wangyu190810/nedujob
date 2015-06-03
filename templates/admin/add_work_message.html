@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}add_key{% endblock %}
+{% block content %}
+    <form method="post">
+        <p><input type="text" name="title" placeholder="就业信息标题"></p>
+        <p><input type="text" name="info_link" placeholder="信息来源"></p>
+        <p><textarea class="form-control" rows="5"  name="content" placeholder="就业信息"></textarea></p>
+      <input type="submit">
+    </form>
+
+    {%for data in datas%}
+        {%for job_key in data.data%}
+            {{job_key}}
+        {%endfor%}
+    {%endfor%}
+
+{% endblock %}

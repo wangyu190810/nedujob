@@ -20,7 +20,7 @@ class V2ex(Base):
             tag = list()
             job_key = JobData.get_nedu_job_main_data(DBSession,job_key="job_key")
             for row in job_key.data:
-                print row
+                #print row
                 if row in title:
                     mark = 1
                     tag.append(row)
@@ -69,8 +69,15 @@ class LaGou(Base):
         skill_education = str(company_req[3])[6:len(str(company_req[3]))-7]
         tag = list()
         job_key = JobData.get_nedu_job_main_data(DBSession,job_key="job_key")
+        print job_key.data
+        print("123123")
+        print(content.text)
         for row in job_key.data:
+
             if row in content.text:
+
+                tag = tag.append(row)
+            if row in title:
                 tag = tag.append(row)
         print(skill)
         print(skill_time)

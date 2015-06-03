@@ -41,7 +41,7 @@ class User(Base):
     @classmethod
     def register(cls,connection,email,password,pic,username):
         u"""用户注册"""
-        user = User(email=email,password=password,pic=pic,status=1,username=username)
+        user = User(email=email,password=password,pic=pic,status=0,username=username)
         connection.add(user)
         connection.commit()
         return True
@@ -80,6 +80,14 @@ class User(Base):
         if stmt is None:
             return None
         return stmt
+
+    @classmethod
+    def user_status_change(cls,connection,email):
+        connection.query(User).filter(User.email == email).update({
+            User.status:1
+        })
+        connection.commit()
+
 
 
 

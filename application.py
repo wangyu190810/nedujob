@@ -14,9 +14,10 @@ from config import Config
 from views.user import user_login,user_register,check_user_email,get_user,\
     get_user_info,user_logout
 from views.index import index_job_info,index_info
-from views.admin.admin import admin_index,admin_add_data_key,admin_login
+from views.admin.admin import admin_index,admin_add_data_key,admin_login,\
+    add_work_message
 from views.job import job_info,add_job_tag,search_job,search_more_requirement,\
-    get_some_message
+    get_work_message
 from views.comment import get_comment,post_comment
 
 from models.user import User
@@ -77,7 +78,7 @@ app.add_url_rule("/search",methods=["GET"],
 app.add_url_rule("/filter",methods=["GET"],
                  view_func=search_more_requirement)
 app.add_url_rule("/work_message", methods=["GET"],
-                 view_func=get_some_message)
+                 view_func=get_work_message)
 
 # ---admin---
 
@@ -87,6 +88,8 @@ app.add_url_rule("/admin_add_data_key",methods=["POST","GET"],
                  view_func=admin_add_data_key)
 app.add_url_rule("/admin_login",methods=["GET","POST"],
                  view_func=admin_login)
+app.add_url_rule("/admin_work_message",methods=["GET","POST"],
+                 view_func=add_work_message)
 
 @app.before_request
 def _before_request():

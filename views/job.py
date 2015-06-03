@@ -63,9 +63,9 @@ def search_more_requirement():
         return render_template("filter.html")
 
 
-def get_some_message():
+def get_work_message():
     if request.method == "GET":
-        return render_template("work_message.html")
+        return render_template("work_message.html",jobs = Job.get_work_message(g.db))
 
 
 
