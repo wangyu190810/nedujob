@@ -73,7 +73,7 @@ class User(Base):
     @classmethod
     def get_admin_login(cls,connection,username,password):
 
-        stmt =  connection.query(User).\
+        stmt = connection.query(User).\
             filter(User.email == username).\
             filter(User.password == password).\
             filter(User.status == 100).scalar()

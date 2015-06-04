@@ -49,5 +49,10 @@ class JobData(Base):
     def get_nedu_job_key(cls,connection):
         return connection.query(JobData)
 
+    @classmethod
+    def get_nedu_job_from_tag(cls,connection,tag):
+        return connection.query(JobData).filter(JobData.job_key == tag).scalar()
+
+
 # 表创建语句
 # Base.metadata.create_all(engine)

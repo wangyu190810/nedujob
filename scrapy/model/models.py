@@ -61,6 +61,7 @@ class Job(Base):
                 )
         connection.add(job)
         connection.commit()
+        return connection.query(Job).filter(Job.info_link == info_link).first()
 
     @classmethod
     def add_data_from_v2ex(cls, connection, title,

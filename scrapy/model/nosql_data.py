@@ -22,7 +22,6 @@ class JobData(Base):
     data = Column(JSONB)
 
 
-
     @classmethod
     def add_nedu_job_main_key(cls,connection,job_key,data):
         stmt = connection.query(JobData).filter(JobData.job_key == job_key).scalar()
@@ -48,6 +47,37 @@ class JobData(Base):
     @classmethod
     def get_nedu_job_key(cls,connection):
         return connection.query(JobData)
+
+    @classmethod
+    def add_tag_content(cls,connection,job_kye=None,content=None,tag=None):
+        u"""将标签放到数据数据库中"""
+        print job_kye,content
+        if (job_kye or content) is None:
+            return 0
+        if tag == 1:
+            connection.commit()
+        stmt = connection.query(JobData).filter(JobData.job_key == job_kye).scalar()
+        if stmt:
+            keys = stmt.data
+            print(type(keys))
+            if type(keys) is int:
+                keys = list()
+                keys.append(stmt.data)
+            keys.append(content)
+            print(keys)
+            ccc = set(keys)
+            keys = list(ccc)
+            print(keys)
+            connection.query(JobData).filter(JobData.job_key == job_kye).update(
+                {
+                    JobData.data: keys
+                }
+            )
+        else:
+            stmt = JobData(job_key=job_kye,data=content)
+            connection.add(stmt)
+
+
 
 
 def create_table():

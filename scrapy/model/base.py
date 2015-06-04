@@ -21,7 +21,7 @@ from sqlalchemy.ext.declarative import declarative_base
 metadata = MetaData()
 Base = declarative_base()
 
-engine = create_engine(Config.db,echo=True)
+engine = create_engine(Config.db)
 
 DBSession = scoped_session(sessionmaker(bind=engine))
 

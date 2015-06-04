@@ -2,6 +2,7 @@
 __author__ = 'Administrator'
 
 from data.model.models import Job
+from data.model.nosql_data import JobData
 from libs.lib import get_page_nums
 from models.user import User
 import time
@@ -10,7 +11,7 @@ import json
 import paginate_sqlalchemy
 
 
-from flask import redirect,render_template,request,g,session
+from flask import redirect,render_template,request,g,session,flash
 
 
 def job_info(job_id):
@@ -60,8 +61,18 @@ def search_more_requirement():
                                    jobs = paginate_sqlalchemy.SqlalchemyOrmPage(jobs,page=page,items_per_page=20),
                                    date=date,
                                    page_nums=get_page_nums(jobs))
-        return render_template("filter.html")
+        return render_template("filter.html",tags=JobData.get_nedu_job_main_data(g.db,"job_key").data)
 
+
+def search_tag(tag):
+    if request.method == "GET":
+        jobs = Job.get_job_from_tag(g.db,tag)
+        if jobs:
+            return render_template("filter.html",
+                                jobs = paginate_sqlalchemy.SqlalchemyOrmPage(jobs,page=1,items_per_page=20),
+                                page_nums=get_page_nums(jobs))
+        flash(u"没有找到，请重新选择")
+        return redirect("/filter")
 
 def get_work_message():
     if request.method == "GET":

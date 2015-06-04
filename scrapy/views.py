@@ -46,45 +46,27 @@ class LaGou(Base):
         content = Base.get_content(site_file, name="job_bt", tag="class")
         skill = Base.get_content(site_file, name="job_request", tag="class")
         salary = Base.get_content(site_file,name="red",tag="class").string
-        print(company)
-        print(title)
-        print(content.text)
-        print(str(content))
+
         company_link = company.find_all(r"a")[1].string
-        print(company_link)
-        print(salary)
-        #
-        # print(skill)
+
         company_req = skill.find_all("span")
         publish_time = skill.find("div")
         publish_time = str(publish_time)[5:len(str(publish_time))-6]
-        print publish_time
-        print company_req
-        print company_req[1]
-        print len(str(company_req[1]))
+
         address = str(company_req[1])[6:len(str(company_req[1]))-7]
-        #address = str(company_req[1])[5:]
-        print(address)
+
         skill_time = str(company_req[2])[6:len(str(company_req[2]))-7]
         skill_education = str(company_req[3])[6:len(str(company_req[3]))-7]
-        tag = list()
+        skill_tag = list()
         job_key = JobData.get_nedu_job_main_data(DBSession,job_key="job_key")
-        print job_key.data
-        print("123123")
-        print(content.text)
+
+
         for row in job_key.data:
-
-            if row in content.text:
-
-                tag = tag.append(row)
-            if row in title:
-                tag = tag.append(row)
-        print(skill)
-        print(skill_time)
-        print(skill_education)
+            if row in title or row in content.text:
+                skill_tag.append(row)
         company_info = company.text
-        print(company_info)
-        Job.add_data_from_lagou(DBSession,
+
+        job_info = Job.add_data_from_lagou(DBSession,
                                 company=title,
                                 company_link=company_link,
                                 company_info=company_info,
@@ -96,13 +78,13 @@ class LaGou(Base):
                                 content=content.text,
                                 content_rendered=str(content),
                                 publish_time=publish_time,
-                                tag=tag)
+                                tag=skill_tag)
+        print("asdfasdf")
+        print(skill_tag)
+        for row in skill_tag:
 
-    # print lagou.get_content(site_file, name="job_request", tag="class")
-    # print lagou.get_content(site_file, name="job_bt", tag="class")
-    # print lagou.get_content(site_file, name="c_feature reset", tag="class")
-    # print lagou.get_content(site_file, name="job_company", tag="class")
-    # print(lagou.get_content(site_file, tag="text"))
+            JobData.add_tag_content(DBSession,job_kye=row,content=job_info.id)
+        JobData.add_tag_content(DBSession,tag=1)
 
 
 

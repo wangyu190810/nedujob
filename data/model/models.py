@@ -12,8 +12,9 @@ from sqlalchemy.schema import Column,Table
 from sqlalchemy.types import UnicodeText,Integer,Unicode,String,DateTime,Date,TEXT
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy import func
-from base import Base
 
+from base import Base
+from data.model.nosql_data import JobData
 
 class Job(Base):
 
@@ -119,10 +120,24 @@ class Job(Base):
 
     @classmethod
     def add_work_message(cls,connection,title,content,info_link):
+        u"""添加就业指导建议"""
         stmt = Job(title=title,content=content,source="work_message",info_link=info_link)
         connection.add(stmt)
         connection.commit()
 
     @classmethod
     def get_work_message(cls,connection):
+        u"""获取就业指导建议"""
         return connection.query(Job).filter(Job.source == "work_message")
+
+    @classmethod
+    def get_job_from_tag(cls,connection,tag):
+        u"""从标签找到工作信息"""
+        tag_key = JobData.get_nedu_job_from_tag(connection,tag)
+        if tag_key:
+            job_id = tag_key.data
+            if type(job_id) is not list:
+                    job_id = list()
+                    job_id.append(tag_key.data)
+            return connection.query(Job).filter(Job.id.in_(job_id))
+        return None
