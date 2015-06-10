@@ -25,6 +25,14 @@
 
 </p>
 
+<strong>地点标签:</strong>
+
+<p>
+    {%for addr in address%}
+        <a href="/search_addr/{{addr[0]}}"> <span class="label label-info">{{addr[0]}}</span></a>
+    {%endfor%}
+</p>
+
 
 <form action="#" method="get">
     <input type="text" name="daterange">

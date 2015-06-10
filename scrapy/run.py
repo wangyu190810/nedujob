@@ -7,7 +7,7 @@ from views import V2ex,LaGou
 
 
 if __name__ == "__main__":
-    link_num = 612866
+    link_num = 613866
     while True:
 
         # if link_num % 4 == 1:

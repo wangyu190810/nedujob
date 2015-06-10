@@ -3,7 +3,7 @@ __author__ = 'Administrator'
 
 from data.model.models import Job
 from data.model.nosql_data import JobData
-from libs.lib import get_page_nums
+from libs.lib import get_page_nums,validate_user_login
 from models.user import User
 import time
 import json
@@ -24,12 +24,15 @@ def job_info_site(site):
     if request.method == "GET":
         return render_template("index.html", jobs=Job.get_job_info(g.db, 100,site))
 
-
+#@validate_user_login
 def add_job_tag():
+    u"""用户关注tag"""
     if request.method == "POST":
         user_id = session.get("user_id")
         tag = request.form.get("tag")
+        print(tag)
         User.user_follow_tag(g.db, user_id, tag=tag)
+        JobData.add_have_tag_user_id(g.db, user_id, tag=tag)
         result = {"status": "success", "tag": tag}
         return json.dumps(result)
     result = {"status": "success"}
@@ -61,7 +64,9 @@ def search_more_requirement():
                                    jobs = paginate_sqlalchemy.SqlalchemyOrmPage(jobs,page=page,items_per_page=20),
                                    date=date,
                                    page_nums=get_page_nums(jobs))
-        return render_template("filter.html",tags=JobData.get_nedu_job_main_data(g.db,"job_key").data)
+        return render_template("filter.html",
+                               tags=JobData.get_nedu_job_main_data(g.db,"job_key").data,
+                               address=Job.get_all_address(g.db))
 
 
 def search_tag(tag):
@@ -74,9 +79,22 @@ def search_tag(tag):
         flash(u"没有找到，请重新选择")
         return redirect("/filter")
 
+
 def get_work_message():
     if request.method == "GET":
         return render_template("work_message.html",jobs = Job.get_work_message(g.db))
+
+
+def search_addr(addr):
+    if request.method == "GET":
+        jobs = Job.get_job_from_address(connection=g.db,address=addr)
+        return render_template("filter.html",
+                               jobs =paginate_sqlalchemy.SqlalchemyOrmPage(jobs,page=1,items_per_page=20), )
+
+def get_count():
+    return render_template("count.html",
+                           address=Job.get_count_addr_num(g.db),
+                           tags=JobData.get_tag_num(g.db))
 
 
 

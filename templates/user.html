@@ -7,6 +7,17 @@
       <div class="fa-user">
         <a href="/user/{{user.id}}"><strong> {{ user.username }}</strong></a>
         <img src="http://127.0.0.1:8888/static/img/nedujob.jpg" alt="头像">
+        <p>
+        {%if user.tag%}
+          <strong>用户关注标签</strong>
+           {%for tag in user.tag%}
+            <span class="label label-info">
+                {{tag}}
+            </span>
+            {%endfor%}
+        {%endif%}
+        </p>
+
       </div>
     {% endfor %}
 {% endblock %}

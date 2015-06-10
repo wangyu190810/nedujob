@@ -14,14 +14,39 @@
             {{job.create_time}}
             {%endif%}
         </p>
+          {%if job.tag%}
         <p class="panel-info"><strong>基本要求：</strong> {{ job.skill}}</p>
           <p id = get_skill({{job.tag}})></p>
-          <p id = "skill_tag"></p>
-            <strong>职位标签:</strong>
-              {%for tag in job.tag%}
-              <span class="label label-info">{{tag}}</span>
-              {%endfor%}
 
+          <p id = "skill_tag"></p>
+
+            <strong>职位标签:</strong>
+
+              {%for tag in job.tag%}
+                <input type="button" class="btn btn-info" id="{{tag}}" name="{{tag}}" value="{{tag}}">
+            <script>
+                $(document).ready(function(){
+                     $("#{{tag}}").click(function(){
+                    tag  = $("#{{tag}}").val();
+                         alert(tag);
+                    $.post(
+                        "/add_job_tag",
+                        {"tag":tag},
+                        function(status){
+                            alert(status);
+                        }
+                    )
+                });
+             }
+                )
+
+            </script>
+              <!--##<button><span class="label label-info" ></span></button>-->
+              {%endfor%}
+          {%endif%}
+          <strong>工作地点:</strong>
+          {{job.address}}
+          <P></P>
           <p class="modal-content">
               {%if job.content_rendered %}
                 {{ job.content_rendered|safe }}
@@ -49,5 +74,7 @@
           </script>
       </div>
 
+
     {% endfor %}
+
 {% endblock %}

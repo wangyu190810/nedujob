@@ -160,3 +160,8 @@ class Job(Base):
             filter(Job.address == Job.address).\
             group_by(Job.address).\
             order_by(func.count(Job.address).desc())
+
+    @classmethod
+    def get_job_info_by_id(cls,connection,job_id):
+        u"""招聘信息id获取招聘信息"""
+        return connection.query(Job).filter(Job.id == job_id).scalar()

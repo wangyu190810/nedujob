@@ -127,5 +127,22 @@ class JobData(Base):
             connection.add(init_user_id)
         connection.commit()
 
+    @classmethod
+    def get_user_job_ids(cls,connection):
+        u"""获取所有有关注行为用户的id和所关注信息的id"""
+        stmt = connection.query(JobData).filter(JobData.job_key=="user_id").scalar()
+        if stmt:
+            user_jobs = list()
+            user_ids = stmt.data
+            for user_id in user_ids:
+                user_id_jobs = list()
+                job_ids = connection.query(JobData).filter(JobData.job_key==user_id).scalar()
+                user_id_jobs.append(user_id)
+                user_id_jobs.append(job_ids)
+                user_jobs.append(user_id_jobs)
+            return user_jobs
+
+
+
 # 表创建语句
 # Base.metadata.create_all(engine)

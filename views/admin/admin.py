@@ -18,7 +18,7 @@ def admin_index():
 @validate_admin_login
 def admin_add_data_key():
     if request.method == "GET":
-        return render_template("admin/add_key.html", datas=JobData.get_nedu_job_key(g.db))
+        return render_template("admin/add_key.html", datas=JobData.get_nedu_job_key(g.db,job_key="job_key"))
     elif request.method == "POST":
         data = request.form
         job_key = data.get("job_key")

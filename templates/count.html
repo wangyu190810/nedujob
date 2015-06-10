@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}NeduJob{% endblock %}
+
+{% block content %}
+
+   {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+<strong>职位数量的统计:</strong>
+
+
+<p> 数量排名前3位的职位是:
+    {% with %}
+    {%set a = 1%}
+        {%for tag in tags%}
+            {%if a < 4%}
+                <p>排名第{{a}}的职位是<a href="/search_tag/{{tag[0]}}">{{tag[0]}}</a>,职位数量是{{tag[1]}}</p>
+            {%endif%}
+        {%set a = a+ 1%}
+        <a href="/search_tag/{{tag[0]}}"> <span class="label label-info">{{tag[0]}}  {{tag[1]}}</span></a>
+
+
+        {% endfor %}
+    {% endwith %}
+
+
+</p>
+
+<strong>地区和数量的统计:</strong>
+
+<p>{% with %}
+    {%set a = 1%}
+    {%for addr in address%}
+         {%if a < 4%}
+            <p>排名第{{a}}的职位地区是<a href="/search_addr/{{addr[0]}}">{{addr[0]}}</a>,工作岗位数量{{addr[1]}}</p>
+         {%endif%}
+        <a href="/search_addr/{{addr[0]}}"> <span class="label label-info">{{addr[0]}}  {{addr[1]}}</span></a>
+    {%set a = a+ 1%}
+    {%endfor%}
+    {%endwith%}
+</p>
+
+
+
+{%if date%}
+
+
+<ul class="pagination">
+  <li><a href="#">&laquo;</a></li>
+    {%for row in range(page_nums)%}
+        {%if row< 4 %}
+        <li><a href="/filter?daterange={{date}}&page={{row}}">{{row}}</a></li>
+        {%endif%}
+    {%endfor%}
+    <li><a>...</a></li>
+    {%for row in range(page_nums)%}
+        {%if row > page_nums-3%}
+        <li><a href="/filter?daterange={{date}}&page={{row}}">{{row}}</a></li>
+        {%endif%}
+     {%endfor%}
+
+
+  <li><a href="#">&raquo;</a></li>
+</ul>
+
+
+{%endif%}
+
+{% endblock %}
+
+
+{% block tag%}
+    {%for tag in tags%}
+        {%if tag.tag %}
+                <p class="fa-tag" >{{row}}</p>
+        {%endif%}
+    {% endfor %}
+{% endblock %}
+

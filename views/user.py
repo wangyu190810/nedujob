@@ -55,11 +55,15 @@ def get_user_info():
 
 def user_logout():
     u"""用户注销"""
-    session.pop("user_id")
+    if session.get("user_id"):
+        session.pop("user_id")
+    elif session.get("username"):
+        session.pop("username")
     return redirect("/")
 
 
 def check_user_email():
+    u"""用户邮件有效验证"""
     if request.method == "GET":
         email = request.args.get("check")
         print(email)

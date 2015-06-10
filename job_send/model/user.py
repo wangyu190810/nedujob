@@ -6,7 +6,7 @@ import time
 from sqlalchemy import Column, String, Integer, Unicode, Float, func
 from sqlalchemy.dialects.postgresql import JSONB
 
-from models.base import Base
+from base import Base
 
 
 class User(Base):
@@ -74,7 +74,7 @@ class User(Base):
 
     @classmethod
     def get_user(cls,connection,user_id):
-        return connection.query(User).filter(User.id == user_id)
+        return connection.query(User).filter(User.id == user_id).scalar()
 
     @classmethod
     def get_admin_login(cls,connection,username,password):
