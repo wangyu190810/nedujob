@@ -17,7 +17,7 @@ from views.index import index_job_info,index_info
 from views.admin.admin import admin_index,admin_add_data_key,admin_login,\
     add_work_message
 from views.job import job_info,add_job_tag,search_job,search_more_requirement,\
-    get_work_message,search_tag
+    get_work_message,search_tag,search_addr,get_count
 from views.comment import get_comment,post_comment
 
 from models.user import User
@@ -81,6 +81,10 @@ app.add_url_rule("/work_message", methods=["GET"],
                  view_func=get_work_message)
 app.add_url_rule("/search_tag/<tag>",methods=["GET"],
                  view_func=search_tag)
+app.add_url_rule("/search_addr/<addr>",methods=["GET"],
+                 view_func=search_addr)
+app.add_url_rule("/count",methods=["GET"],
+                 view_func=get_count)
 
 # ---admin---
 
